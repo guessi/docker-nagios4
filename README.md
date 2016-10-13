@@ -11,15 +11,16 @@
 
 To run a nagios service with default config, use the command below:
 
-    $ docker run -d -p 80:80 -p 443:443 guessi/docker-nagios4
+    $ docker run -d -p 80:80 -p 443:443 -p 5666:5666 guessi/docker-nagios4
 
 
 To run with persistent data, use the command below:
 
-    $ docker run -d -p 80:80 -p 443:443 -v $(pwd)/path-to-config:/opt/nagios/etc guessi/docker-nagios4
+    $ docker run -d -p 80:80 -p 443:443 -p 5666:5666 -v $(pwd)/path-to-config:/opt/nagios/etc guessi/docker-nagios4
 
 
-## Default User/Pass for WebUI Login
+## Dashboard
 
+* Login: http://localhost/nagios
 * User: nagiosadmin
 * Password: adminpass
