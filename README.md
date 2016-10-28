@@ -1,5 +1,10 @@
 # Dockerized Nagios Service
 
+[![Docker Stars](https://img.shields.io/docker/stars/guessi/docker-nagios4.svg)](https://hub.docker.com/r/guessi/docker-nagios4/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/guessi/docker-nagios4.svg)](https://hub.docker.com/r/guessi/docker-nagios4/)
+[![Docker Automated](https://img.shields.io/docker/automated/guessi/docker-nagios4.svg)](https://hub.docker.com/r/guessi/docker-nagios4/)
+
+
 ## Integrated Items
 
 * Nagios Core 4.2.2
