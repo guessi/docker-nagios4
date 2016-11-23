@@ -7,8 +7,8 @@
 
 ## Integrated Items
 
-* Nagios Core 4.2.2
-* Nagios Plugins 2.1.3
+* Nagios Core 4.2.3
+* Nagios Plugins 2.1.4
 * NRPE 3.0.1
 
 
@@ -21,11 +21,12 @@ To run a nagios service with default config, use the command below:
 
 To run with persistent data, use the command below:
 
-    $ docker run -d -p 80:80 -p 443:443 -p 5666:5666 -v $(pwd)/path-to-config:/opt/nagios/etc guessi/docker-nagios4
+    $ docker run -d -p 80:80 -p 443:443 -p 5666:5666 \
+      -v $(pwd)/path-to-config:/opt/nagios/etc guessi/docker-nagios4
 
 
 ## Dashboard
 
-* Login: http://localhost/nagios
-* User: nagiosadmin
+* Login: http://127.0.0.1/nagios
+* Username: nagiosadmin
 * Password: adminpass
