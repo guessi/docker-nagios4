@@ -126,6 +126,14 @@ RUN a2enconf nagios && \
 ADD supervisord.conf /etc/supervisor/
 ADD service.conf /etc/supervisor/conf.d/
 
+# ---- workaround
+
+# FIXME: this is to resolve the following error message (Event Log)
+# * Error: Could not open log file '/opt/nagios/var/nagios.log' for reading!
+
+# FIXME: credentials in log file might exposed
+RUN touch /opt/nagios/var/nagios.log && chmod 0644 /opt/nagios/var/nagios.log
+
 # ---- misc
 
 EXPOSE 80 443 5666
