@@ -8,7 +8,7 @@ ENV NAGIOS_CORE_ARCHIVE    https://github.com/NagiosEnterprises/nagioscore/archi
 ENV NAGIOS_NRPE_VERSION    3.0.1
 ENV NAGIOS_NRPE_ARCHIVE    https://github.com/NagiosEnterprises/nrpe/archive/${NAGIOS_NRPE_VERSION}.tar.gz
 
-ENV NAGIOS_PLUGINS_VERSION 2.1.4
+ENV NAGIOS_PLUGINS_VERSION 2.2.0
 ENV NAGIOS_PLUGINS_ARCHIVE https://nagios-plugins.org/download/nagios-plugins-${NAGIOS_PLUGINS_VERSION}.tar.gz
 
 # ---- environment variables
