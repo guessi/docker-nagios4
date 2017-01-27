@@ -72,7 +72,8 @@ RUN mkdir -p /tmp/nagios                                                   && \
 # ---- nagios plugins
 
 RUN mkdir -p /tmp/nagios-plugins                                           && \
-    wget ${NAGIOS_PLUGINS_ARCHIVE} -qO /tmp/nagios-plugins.tar.gz          && \
+    wget --no-check-certificate ${NAGIOS_PLUGINS_ARCHIVE}                     \
+         -qO /tmp/nagios-plugins.tar.gz                                    && \
     tar --strip 1 -zxf /tmp/nagios-plugins.tar.gz -C /tmp/nagios-plugins   && \
     cd /tmp/nagios-plugins                                                 && \
     ./configure                                                               \
