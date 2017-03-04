@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 # ---- package version
 
 ENV NAGIOS_CORE_VERSION    4.3.1
-ENV NAGIOS_CORE_ARCHIVE    https://github.com/NagiosEnterprises/nagioscore/archive/release-${NAGIOS_CORE_VERSION}.tar.gz
+ENV NAGIOS_CORE_ARCHIVE    https://github.com/NagiosEnterprises/nagioscore/archive/nagios-${NAGIOS_CORE_VERSION}.tar.gz
 
 ENV NAGIOS_NRPE_VERSION    3.0.1
 ENV NAGIOS_NRPE_ARCHIVE    https://github.com/NagiosEnterprises/nrpe/archive/${NAGIOS_NRPE_VERSION}.tar.gz
