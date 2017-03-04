@@ -1,5 +1,7 @@
 FROM ubuntu:14.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 # ---- package version
 
 ENV NAGIOS_CORE_VERSION    4.3.1
@@ -37,11 +39,11 @@ RUN apt-get update                                                         && \
         libgd2-xpm-dev                                                        \
         libssl-dev                                                            \
         php5-gd                                                               \
+        python-setuptools                                                     \
         unzip                                                                 \
         wget
 
-RUN apt-get install -y python-setuptools                                   && \
-    easy_install pip                                                       && \
+RUN easy_install pip                                                       && \
     pip install supervisor                                                 && \
     mkdir -p /var/log/supervisor
 
