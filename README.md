@@ -9,7 +9,7 @@
 
 * Nagios Core 4.3.2
 * Nagios Plugins 2.2.1
-* NRPE 3.1.1
+* NRPE 3.2.0
 
 
 ## Usage
