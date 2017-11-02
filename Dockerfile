@@ -31,21 +31,20 @@ RUN groupadd ${NAGIOS_GROUP}                                               && \
 # ---- basic requirements
 
 RUN apt-get update                                                         && \
-    apt-get install -y                                                        \
+    apt-get install -y --no-install-recommends                                \
         apache2                                                               \
         apache2-utils                                                         \
         build-essential                                                       \
         libapache2-mod-php5                                                   \
         libgd2-xpm-dev                                                        \
         libssl-dev                                                            \
+        openssl                                                               \
+        php5-cli                                                              \
         php5-gd                                                               \
-        python-setuptools                                                     \
+        python-pip                                                            \
         unzip                                                                 \
-        wget
-
-RUN easy_install pip                                                       && \
-    pip install supervisor                                                 && \
-    mkdir -p /var/log/supervisor
+        wget                                                               && \
+    pip install supervisor
 
 # ---- nagios core
 
@@ -127,6 +126,7 @@ RUN a2enconf nagios && \
 
 # ---- supervisor
 
+RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisor/
 ADD service.conf /etc/supervisor/conf.d/
 
