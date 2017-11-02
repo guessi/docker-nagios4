@@ -50,7 +50,8 @@ RUN easy_install pip                                                       && \
 # ---- nagios core
 
 RUN mkdir -p /tmp/nagios                                                   && \
-    wget ${NAGIOS_CORE_ARCHIVE} -qO /tmp/nagioscore.tar.gz                 && \
+    wget --no-check-certificate ${NAGIOS_CORE_ARCHIVE}                        \
+         -qO /tmp/nagioscore.tar.gz                                        && \
     tar --strip 1 -zxf /tmp/nagioscore.tar.gz -C /tmp/nagios               && \
     cd /tmp/nagios                                                         && \
     ./configure                                                               \
@@ -94,7 +95,8 @@ RUN mkdir -p /tmp/nagios-plugins                                           && \
 # ---- nrpe
 
 RUN mkdir -p /tmp/nrpe                                                     && \
-    wget ${NAGIOS_NRPE_ARCHIVE} -qO /tmp/nrpe.tar.gz                       && \
+    wget --no-check-certificate ${NAGIOS_NRPE_ARCHIVE}                        \
+         -qO /tmp/nrpe.tar.gz                                              && \
     tar --strip 1 -zxf /tmp/nrpe.tar.gz -C /tmp/nrpe                       && \
     cd /tmp/nrpe                                                           && \
     ./configure                                                               \
