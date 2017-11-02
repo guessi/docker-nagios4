@@ -38,6 +38,7 @@ RUN apt update                                                             && \
         dnsutils                                                              \
         fping                                                                 \
         gcc                                                                   \
+        iputils-ping                                                          \
         libapache2-mod-php5                                                   \
         libc6                                                                 \
         libgd-dev                                                             \
