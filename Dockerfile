@@ -35,6 +35,8 @@ RUN apt update                                                             && \
         apache2                                                               \
         apache2-utils                                                         \
         autoconf                                                              \
+        dnsutils                                                              \
+        fping                                                                 \
         gcc                                                                   \
         libapache2-mod-php5                                                   \
         libc6                                                                 \
@@ -46,6 +48,7 @@ RUN apt update                                                             && \
         openssl                                                               \
         php5-cli                                                              \
         php5-gd                                                               \
+        snmp                                                                  \
         supervisor                                                            \
         unzip                                                                 \
         wget
