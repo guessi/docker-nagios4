@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -39,7 +39,7 @@ RUN apt update                                                             && \
         fping                                                                 \
         gcc                                                                   \
         iputils-ping                                                          \
-        libapache2-mod-php5                                                   \
+        libapache2-mod-php7.0                                                 \
         libc6                                                                 \
         libgd-dev                                                             \
         libgd2-xpm-dev                                                        \
@@ -47,8 +47,8 @@ RUN apt update                                                             && \
         libssl-dev                                                            \
         make                                                                  \
         openssl                                                               \
-        php5-cli                                                              \
-        php5-gd                                                               \
+        php7.0-cli                                                            \
+        php7.0-gd                                                             \
         snmp                                                                  \
         supervisor                                                            \
         unzip                                                                 \
