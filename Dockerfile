@@ -30,21 +30,25 @@ RUN groupadd ${NAGIOS_GROUP}                                               && \
 
 # ---- basic requirements
 
-RUN apt-get update                                                         && \
-    apt-get install -y --no-install-recommends                                \
+RUN apt update                                                             && \
+    apt install -y --no-install-recommends                                    \
         apache2                                                               \
         apache2-utils                                                         \
-        build-essential                                                       \
+        autoconf                                                              \
+        gcc                                                                   \
         libapache2-mod-php5                                                   \
+        libc6                                                                 \
+        libgd-dev                                                             \
         libgd2-xpm-dev                                                        \
+        libmcrypt-dev                                                         \
         libssl-dev                                                            \
+        make                                                                  \
         openssl                                                               \
         php5-cli                                                              \
         php5-gd                                                               \
-        python-pip                                                            \
+        supervisor                                                            \
         unzip                                                                 \
-        wget                                                               && \
-    pip install supervisor
+        wget
 
 # ---- nagios core
 
@@ -144,4 +148,4 @@ EXPOSE 80 443 5666
 
 VOLUME [ "${NAGIOS_HOME}/var", "${NAGIOS_HOME}/etc" ]
 
-CMD [ "/usr/local/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
+CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
