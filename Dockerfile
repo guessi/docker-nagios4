@@ -39,7 +39,7 @@ RUN apt update                                                             && \
         fping                                                                 \
         gcc                                                                   \
         iputils-ping                                                          \
-        libapache2-mod-php7.0                                                 \
+        libapache2-mod-php                                                    \
         libc6                                                                 \
         libgd-dev                                                             \
         libgd2-xpm-dev                                                        \
@@ -47,8 +47,8 @@ RUN apt update                                                             && \
         libssl-dev                                                            \
         make                                                                  \
         openssl                                                               \
-        php7.0-cli                                                            \
-        php7.0-gd                                                             \
+        php-cli                                                               \
+        php-gd                                                                \
         snmp                                                                  \
         supervisor                                                            \
         unzip                                                                 \
