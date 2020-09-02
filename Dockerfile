@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -35,6 +35,7 @@ RUN apt update                                                             && \
         apache2                                                               \
         apache2-utils                                                         \
         autoconf                                                              \
+        curl                                                                  \
         dnsutils                                                              \
         fping                                                                 \
         gcc                                                                   \
@@ -42,8 +43,8 @@ RUN apt update                                                             && \
         libapache2-mod-php                                                    \
         libc6                                                                 \
         libgd-dev                                                             \
-        libgd2-xpm-dev                                                        \
         libmcrypt-dev                                                         \
+        libperl-dev                                                           \
         libssl-dev                                                            \
         make                                                                  \
         openssl                                                               \
