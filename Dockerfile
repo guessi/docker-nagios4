@@ -27,6 +27,8 @@ ENV NAGIOS_HOME            /opt/nagios
 
 RUN groupadd ${NAGIOS_GROUP}                                               && \
     useradd --system -d ${NAGIOS_HOME} -g ${NAGIOS_GROUP} ${NAGIOS_USER}   && \
+    mkdir -p ${NAGIOS_HOME}                                                && \
+    chown -R ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}                 && \
     usermod -G nagios www-data
 
 # ---- basic requirements
@@ -91,16 +93,16 @@ RUN apt update                                                             && \
 # ---- nagios core
 
 RUN mkdir -p /tmp/nagios                                                   && \
-    wget --no-check-certificate ${NAGIOS_CORE_ARCHIVE}                        \
+    wget --no-check-certificate --no-verbose ${NAGIOS_CORE_ARCHIVE}           \
          -qO /tmp/nagioscore.tar.gz                                        && \
     tar --strip 1 -zxf /tmp/nagioscore.tar.gz -C /tmp/nagios               && \
     cd /tmp/nagios                                                         && \
-    ./configure                                                               \
-    --prefix=${NAGIOS_HOME}                                                   \
-    --exec-prefix=${NAGIOS_HOME}                                              \
-    --with-httpd-conf=/etc/apache2/conf-available                             \
-    --with-nagios-user=${NAGIOS_USER}                                         \
-    --with-nagios-group=${NAGIOS_GROUP}                                    && \
+        ./configure                                                           \
+            --prefix=${NAGIOS_HOME}                                           \
+            --exec-prefix=${NAGIOS_HOME}                                      \
+            --with-httpd-conf=/etc/apache2/conf-available                     \
+            --with-nagios-user=${NAGIOS_USER}                                 \
+            --with-nagios-group=${NAGIOS_GROUP}                            && \
     make all                                                               && \
     make install                                                           && \
     make install-init                                                      && \
@@ -108,28 +110,25 @@ RUN mkdir -p /tmp/nagios                                                   && \
     make install-commandmode                                               && \
     make install-webconf                                                   && \
     make clean                                                             && \
-    cd ~                                                                   && \
     rm -rf /tmp/nagios                                                     && \
-    rm -rf /tmp/nagioscore.tar.gz                                          && \
-    /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg
+    rm -rf /tmp/nagioscore.tar.gz
 
 # ---- nagios plugins
 
 RUN mkdir -p /tmp/nagios-plugins                                           && \
-    wget --no-check-certificate ${NAGIOS_PLUGINS_ARCHIVE}                     \
+    wget --no-check-certificate --no-verbose ${NAGIOS_PLUGINS_ARCHIVE}        \
          -qO /tmp/nagios-plugins.tar.gz                                    && \
     tar --strip 1 -zxf /tmp/nagios-plugins.tar.gz -C /tmp/nagios-plugins   && \
     cd /tmp/nagios-plugins                                                 && \
-    ./configure                                                               \
-    --prefix=${NAGIOS_HOME}                                                   \
-    --enable-perl-modules                                                     \
-    --enable-extra-opts                                                       \
-    --with-openssl=/usr/bin/openssl                                        && \
+        ./configure                                                           \
+            --prefix=${NAGIOS_HOME}                                           \
+            --enable-perl-modules                                             \
+            --enable-extra-opts                                               \
+            --with-openssl=/usr/bin/openssl                                && \
     make                                                                   && \
     make all                                                               && \
     make install                                                           && \
     make clean                                                             && \
-    cd ~                                                                   && \
     rm -rf /tmp/nagios-plugins                                             && \
     rm -rf /tmp/nagios-plugins.tar.gz
 
@@ -140,13 +139,13 @@ RUN mkdir -p /tmp/nrpe                                                     && \
          -qO /tmp/nrpe.tar.gz                                              && \
     tar --strip 1 -zxf /tmp/nrpe.tar.gz -C /tmp/nrpe                       && \
     cd /tmp/nrpe                                                           && \
-    ./configure                                                               \
-    --prefix=${NAGIOS_HOME}                                                   \
-    --enable-ssl                                                              \
-    --with-opsys=linux                                                        \
-    --with-init-type=sysv                                                     \
-    --with-ssl=/usr/bin/openssl                                               \
-    --with-ssl-lib=/usr/lib/x86_64-linux-gnu                               && \
+        ./configure                                                           \
+            --prefix=${NAGIOS_HOME}                                           \
+            --enable-ssl                                                      \
+            --with-opsys=linux                                                \
+            --with-init-type=sysv                                             \
+            --with-ssl=/usr/bin/openssl                                       \
+            --with-ssl-lib=/usr/lib/x86_64-linux-gnu                       && \
     make                                                                   && \
     make all                                                               && \
     make install                                                           && \
@@ -154,16 +153,16 @@ RUN mkdir -p /tmp/nrpe                                                     && \
     make install-config                                                    && \
     make install-daemon                                                    && \
     make clean                                                             && \
-    cd ~                                                                   && \
     rm -rf /tmp/nrpe                                                       && \
     rm -rf /tmp/nrpe.tar.gz
 
 # ---- nagios web
 
-RUN htpasswd -bc ${NAGIOS_HOME}/etc/htpasswd.users ${NAGIOS_WEB_USER} ${NAGIOS_WEB_PASS} && \
+RUN htpasswd -bc ${NAGIOS_HOME}/etc/htpasswd.users                            \
+        ${NAGIOS_WEB_USER} ${NAGIOS_WEB_PASS}                              && \
     chown ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}/etc/htpasswd.users
 
-RUN a2enconf nagios && \
+RUN a2enconf nagios                                                        && \
     a2enmod cgi rewrite ssl
 
 # ---- supervisor
