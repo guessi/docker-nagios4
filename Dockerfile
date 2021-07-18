@@ -26,7 +26,8 @@ ENV NAGIOS_HOME            /opt/nagios
 # ---- ensure user existence before provision
 
 RUN groupadd ${NAGIOS_GROUP}                                               && \
-    useradd --system -d ${NAGIOS_HOME} -g ${NAGIOS_GROUP} ${NAGIOS_USER}
+    useradd --system -d ${NAGIOS_HOME} -g ${NAGIOS_GROUP} ${NAGIOS_USER}   && \
+    usermod -G nagios www-data
 
 # ---- basic requirements
 
@@ -170,14 +171,6 @@ RUN a2enconf nagios && \
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisor/
 ADD service.conf /etc/supervisor/conf.d/
-
-# ---- workaround
-
-# FIXME: this is to resolve the following error message (Event Log)
-# * Error: Could not open log file '/opt/nagios/var/nagios.log' for reading!
-
-# FIXME: credentials in log file might exposed
-RUN touch /opt/nagios/var/nagios.log && chmod 0644 /opt/nagios/var/nagios.log
 
 # ---- misc
 
