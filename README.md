@@ -35,6 +35,18 @@ docker run -d \
     guessi/docker-nagios4
 ```
 
+To run with customized login username/password, use the command below:
+
+```
+docker run -d \
+  -p 80:80 \
+  -p 443:443 \
+  -p 5666:5666 \
+  -v $(pwd)/path/to/passwd:/opt/nagios/htpasswd.users:ro \
+  -v $(pwd)/path/to/config:/opt/nagios/etc:ro \
+    guessi/docker-nagios4
+```
+
 ## Dashboard
 
 * Login: http://127.0.0.1/nagios

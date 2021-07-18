@@ -1,3 +1,15 @@
+FROM alpine:3.14 AS htpasswd
+
+ARG NAGIOS_WEB_USER="nagiosadmin"
+ARG NAGIOS_WEB_PASS="adminpass"
+
+ENV NAGIOS_WEB_USER ${NAGIOS_WEB_USER}
+ENV NAGIOS_WEB_PASS ${NAGIOS_WEB_PASS}
+
+RUN apk add --no-cache apache2-utils
+RUN htpasswd -bc /opt/htpasswd.users "${NAGIOS_WEB_USER}" "${NAGIOS_WEB_PASS}"
+
+
 FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -17,9 +29,6 @@ ENV NAGIOS_PLUGINS_ARCHIVE https://nagios-plugins.org/download/nagios-plugins-${
 
 ENV NAGIOS_USER            nagios
 ENV NAGIOS_GROUP           nagios
-
-ENV NAGIOS_WEB_USER        nagiosadmin
-ENV NAGIOS_WEB_PASS        adminpass
 
 ENV NAGIOS_HOME            /opt/nagios
 
@@ -41,7 +50,6 @@ RUN groupadd ${NAGIOS_GROUP}                                               && \
 RUN apt update                                                             && \
     apt install -y --no-install-recommends                                    \
         apache2                                                               \
-        apache2-utils                                                         \
         autoconf                                                              \
         bc                                                                    \
         build-essential                                                       \
@@ -156,11 +164,12 @@ RUN mkdir -p /tmp/nrpe                                                     && \
     rm -rf /tmp/nrpe                                                       && \
     rm -rf /tmp/nrpe.tar.gz
 
-# ---- nagios web
+# ---- nagios auth
 
-RUN htpasswd -bc ${NAGIOS_HOME}/etc/htpasswd.users                            \
-        ${NAGIOS_WEB_USER} ${NAGIOS_WEB_PASS}                              && \
-    chown ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}/etc/htpasswd.users
+COPY --from=htpasswd /opt/htpasswd.users ${NAGIOS_HOME}/etc/htpasswd.users
+RUN chown ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}/etc/htpasswd.users
+
+# ---- apache2
 
 RUN a2enconf nagios                                                        && \
     a2enmod cgi rewrite ssl
