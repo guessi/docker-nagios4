@@ -1,4 +1,4 @@
-FROM alpine:3.15 AS htpasswd
+FROM alpine:3.16 AS htpasswd
 
 ARG NAGIOS_WEB_USER="nagiosadmin"
 ARG NAGIOS_WEB_PASS="adminpass"
