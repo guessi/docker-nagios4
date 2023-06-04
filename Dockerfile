@@ -16,7 +16,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # ---- package version
 
-ENV NAGIOS_CORE_VERSION    4.4.6
+ENV NAGIOS_CORE_VERSION    4.4.13
 ENV NAGIOS_CORE_ARCHIVE    https://github.com/NagiosEnterprises/nagioscore/archive/nagios-${NAGIOS_CORE_VERSION}.tar.gz
 
 ENV NAGIOS_NRPE_VERSION    4.1.0
