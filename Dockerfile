@@ -10,7 +10,7 @@ RUN apk add --no-cache apache2-utils
 RUN htpasswd -bc /opt/htpasswd.users "${NAGIOS_WEB_USER}" "${NAGIOS_WEB_PASS}"
 
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
