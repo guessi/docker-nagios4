@@ -7,8 +7,8 @@
 
 ## Integrated Items
 
-* Nagios Core 4.4.13
-* Nagios Plugins 2.4.5
+* Nagios Core 4.4.14
+* Nagios Plugins 2.4.6
 * NRPE 4.1.0
 
 
