@@ -98,6 +98,20 @@ RUN apt update                                                             && \
         unzip                                                                 \
         wget
 
+# Not sure why nagios communities change the release uri quite often?
+# To avoid breaking CI/CD pipeline, add an extra layer here to validate uri
+# before build.
+#
+# Issues:
+# - https://github.com/NagiosEnterprises/nagioscore/issues/339
+# - https://github.com/NagiosEnterprises/nagioscore/issues/935
+# - https://github.com/NagiosEnterprises/nagioscore/issues/937
+# - https://github.com/nagios-plugins/nagios-plugins/issues/751
+
+RUN wget --spider ${NAGIOS_CORE_ARCHIVE}
+RUN wget --spider ${NAGIOS_PLUGINS_ARCHIVE}
+RUN wget --spider ${NAGIOS_NRPE_ARCHIVE}
+
 # ---- nagios core
 
 RUN mkdir -p /tmp/nagios                                                   && \
