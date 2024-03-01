@@ -23,7 +23,7 @@ ENV NAGIOS_NRPE_VERSION    4.1.0
 ENV NAGIOS_NRPE_ARCHIVE    https://github.com/NagiosEnterprises/nrpe/archive/refs/tags/nrpe-${NAGIOS_NRPE_VERSION}.tar.gz
 
 ENV NAGIOS_PLUGINS_VERSION 2.4.8
-ENV NAGIOS_PLUGINS_ARCHIVE https://github.com/nagios-plugins/nagios-plugins/releases/download/${NAGIOS_PLUGINS_VERSION}/nagios-plugins-${NAGIOS_PLUGINS_VERSION}.tar.gz
+ENV NAGIOS_PLUGINS_ARCHIVE https://github.com/nagios-plugins/nagios-plugins/releases/download/release-${NAGIOS_PLUGINS_VERSION}/nagios-plugins-${NAGIOS_PLUGINS_VERSION}.tar.gz
 
 # ---- environment variables
 
