@@ -9,8 +9,17 @@ ENV NAGIOS_WEB_PASS ${NAGIOS_WEB_PASS}
 RUN apk add --no-cache apache2-utils
 RUN htpasswd -bc /opt/htpasswd.users "${NAGIOS_WEB_USER}" "${NAGIOS_WEB_PASS}"
 
+# Not sure why nagios communities change the release uri quite often?
+# To avoid breaking CI/CD pipeline, add an extra layer here to validate uri
+# before build.
+#
+# Issues:
+# - https://github.com/NagiosEnterprises/nagioscore/issues/339
+# - https://github.com/NagiosEnterprises/nagioscore/issues/935
+# - https://github.com/NagiosEnterprises/nagioscore/issues/937
+# - https://github.com/nagios-plugins/nagios-plugins/issues/751
 
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS validatelinks
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -24,6 +33,17 @@ ENV NAGIOS_NRPE_ARCHIVE    https://github.com/NagiosEnterprises/nrpe/archive/ref
 
 ENV NAGIOS_PLUGINS_VERSION 2.4.8
 ENV NAGIOS_PLUGINS_ARCHIVE https://github.com/nagios-plugins/nagios-plugins/releases/download/release-${NAGIOS_PLUGINS_VERSION}/nagios-plugins-${NAGIOS_PLUGINS_VERSION}.tar.gz
+
+RUN apt update                                                             && \
+    apt install -y --no-install-recommends                                    \
+        wget                                                               && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget --spider ${NAGIOS_CORE_ARCHIVE}
+RUN wget --spider ${NAGIOS_PLUGINS_ARCHIVE}
+RUN wget --spider ${NAGIOS_NRPE_ARCHIVE}
+
+FROM validatelinks AS builder
 
 # ---- environment variables
 
@@ -95,22 +115,7 @@ RUN apt update                                                             && \
         snmp-mibs-downloader                                                  \
         sudo                                                                  \
         supervisor                                                            \
-        unzip                                                                 \
-        wget
-
-# Not sure why nagios communities change the release uri quite often?
-# To avoid breaking CI/CD pipeline, add an extra layer here to validate uri
-# before build.
-#
-# Issues:
-# - https://github.com/NagiosEnterprises/nagioscore/issues/339
-# - https://github.com/NagiosEnterprises/nagioscore/issues/935
-# - https://github.com/NagiosEnterprises/nagioscore/issues/937
-# - https://github.com/nagios-plugins/nagios-plugins/issues/751
-
-RUN wget --spider ${NAGIOS_CORE_ARCHIVE}
-RUN wget --spider ${NAGIOS_PLUGINS_ARCHIVE}
-RUN wget --spider ${NAGIOS_NRPE_ARCHIVE}
+        unzip
 
 # ---- nagios core
 
