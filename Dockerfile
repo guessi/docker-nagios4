@@ -36,8 +36,11 @@ ENV NAGIOS_PLUGINS_ARCHIVE https://github.com/nagios-plugins/nagios-plugins/rele
 
 RUN apt update                                                             && \
     apt install -y --no-install-recommends                                    \
+        ca-certificates                                                       \
         wget                                                               && \
     rm -rf /var/lib/apt/lists/*
+
+RUN update-ca-certificates -f
 
 RUN wget --spider ${NAGIOS_CORE_ARCHIVE}
 RUN wget --spider ${NAGIOS_PLUGINS_ARCHIVE}
