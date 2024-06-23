@@ -31,7 +31,7 @@ ENV NAGIOS_CORE_ARCHIVE    https://github.com/NagiosEnterprises/nagioscore/archi
 ENV NAGIOS_NRPE_VERSION    4.1.0
 ENV NAGIOS_NRPE_ARCHIVE    https://github.com/NagiosEnterprises/nrpe/archive/refs/tags/nrpe-${NAGIOS_NRPE_VERSION}.tar.gz
 
-ENV NAGIOS_PLUGINS_VERSION 2.4.8
+ENV NAGIOS_PLUGINS_VERSION 2.4.10
 ENV NAGIOS_PLUGINS_ARCHIVE https://github.com/nagios-plugins/nagios-plugins/releases/download/release-${NAGIOS_PLUGINS_VERSION}/nagios-plugins-${NAGIOS_PLUGINS_VERSION}.tar.gz
 
 RUN apt update                                                             && \
@@ -67,8 +67,8 @@ RUN groupadd ${NAGIOS_GROUP}                                               && \
 
 # ---- references:
 # ---- 1. https://support.nagios.com/kb/article.php?id=569#Ubuntu
-# ---- 2. https://github.com/nagios-plugins/nagios-plugins/blob/release-2.4.8/REQUIREMENTS
-# ---- 3. https://github.com/nagios-plugins/nagios-plugins/blob/release-2.4.8/.travis.yml
+# ---- 2. https://github.com/nagios-plugins/nagios-plugins/blob/release-2.4.10/REQUIREMENTS
+# ---- 3. https://github.com/nagios-plugins/nagios-plugins/blob/release-2.4.10/.travis.yml
 
 RUN apt update                                                             && \
     apt install -y --no-install-recommends                                    \
