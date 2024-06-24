@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       -
         name: Checkout
@@ -14,19 +15,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: |
-            guessi/docker-nagios4
+          images: guessi/docker-nagios4
           tags: |
-            type=semver,pattern={{version}}
-
-            # set latest tag for default branch
-            type=raw,value=latest,enable={{is_default_branch}}
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+            type=semver,pattern={{ version }}
+            type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
@@ -38,7 +30,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64,linux/arm64
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
