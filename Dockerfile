@@ -46,7 +46,7 @@ RUN wget --spider ${NAGIOS_CORE_ARCHIVE}
 RUN wget --spider ${NAGIOS_PLUGINS_ARCHIVE}
 RUN wget --spider ${NAGIOS_NRPE_ARCHIVE}
 
-FROM validatelinks AS builder
+FROM validatelinks AS builder-base
 
 # ---- environment variables
 
@@ -119,6 +119,8 @@ RUN apt update                                                             && \
         sudo                                                                  \
         supervisor                                                            \
         unzip
+
+FROM builder-base as builder
 
 # ---- nagios core
 
