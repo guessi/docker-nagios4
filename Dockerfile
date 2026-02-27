@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/alpine:3.20 AS htpasswd
+FROM public.ecr.aws/docker/library/alpine:3.23 AS htpasswd
 
 ARG NAGIOS_WEB_USER="nagiosadmin"
 ARG NAGIOS_WEB_PASS="adminpass"
@@ -19,7 +19,7 @@ RUN htpasswd -bc /opt/htpasswd.users "${NAGIOS_WEB_USER}" "${NAGIOS_WEB_PASS}"
 # - https://github.com/NagiosEnterprises/nagioscore/issues/937
 # - https://github.com/nagios-plugins/nagios-plugins/issues/751
 
-FROM public.ecr.aws/docker/library/ubuntu:22.04 AS validatelinks
+FROM public.ecr.aws/docker/library/ubuntu:24.04 AS validatelinks
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -108,7 +108,7 @@ RUN apt update                                                             && \
         libtext-glob-perl                                                     \
         libupsclient-dev                                                      \
         make                                                                  \
-        netcat                                                                \
+        netcat-openbsd                                                        \
         openssh-client                                                        \
         openssl                                                               \
         php-cli                                                               \
